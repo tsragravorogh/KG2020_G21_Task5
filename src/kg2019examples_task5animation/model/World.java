@@ -4,8 +4,11 @@
  */
 package kg2019examples_task5animation.model;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
+import kg2019examples_task5animation.math.Vector2;
 import kg2019examples_task5animation.utils2d.ScreenConverter;
+import kg2019examples_task5animation.utils2d.ScreenPoint;
 
 /**
  *
@@ -37,7 +40,17 @@ public class World {
      * @param sc Актуальный конвертер координат.
      */
     public void draw(Graphics2D g, ScreenConverter sc) {
-        
+        ScreenPoint tl = sc.r2s(f.getRectangle().getTopLeft());
+        int w = sc.r2sDistanceH(f.getRectangle().getWidth());
+        int h = sc.r2sDistanceV(f.getRectangle().getHeight());
+        g.setColor(Color.WHITE);
+        g.fillRect(tl.getI(), tl.getJ(), w, h);
+        g.setColor(Color.BLACK);
+        g.drawRect(tl.getI(), tl.getJ(), w, h);
+        ScreenPoint pc = sc.r2s(p.getPosition());
+        int rh = sc.r2sDistanceH(p.getR());
+        int rv = sc.r2sDistanceV(p.getR());
+        g.fillOval(pc.getI() - rh, pc.getJ() - rv, rh + rh, rv + rv);
     }
 
     public Field getF() {

@@ -37,7 +37,7 @@ public class Rectangle {
         this.left = left;
         this.top = top;
         this.width = width;
-        this.width = height;
+        this.height = height;
     }
 
     public double getBottom() {

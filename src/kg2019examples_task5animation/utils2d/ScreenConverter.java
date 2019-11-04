@@ -4,6 +4,7 @@
  */
 package kg2019examples_task5animation.utils2d;
 
+import kg2019examples_task5animation.math.Rectangle;
 import kg2019examples_task5animation.math.Vector2;
 
 /**
@@ -31,6 +32,10 @@ public class ScreenConverter {
         this.hr = hr;
         this.ws = ws;
         this.hs = hs;
+    }
+    
+    public ScreenConverter(Rectangle real, int width, int height) {
+        this(real.getLeft(), real.getHeight(), real.getWidth(), real.getHeight(), width, height);
     }
     
     /**
@@ -72,7 +77,7 @@ public class ScreenConverter {
      */
     public int r2sDistanceV(double d) {
         /*Можно написать проще*/
-        return r2s(new Vector2(0, d)).getJ() - r2s(new Vector2(0, 0)).getJ();
+        return r2s(new Vector2(0, 0)).getJ() - r2s(new Vector2(0, d)).getJ();
     }
 
     public double getHr() {
