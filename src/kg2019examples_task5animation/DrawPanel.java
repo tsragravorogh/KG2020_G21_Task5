@@ -34,9 +34,9 @@ public class DrawPanel extends JPanel implements ActionListener {
         super();
         Field f = new Field(
                 new Rectangle(0, 10, 10, 10),
-            0, 9.8);
+            0.1, 9.8);
         w = new World(new Puck(1, 0.3, f.getRectangle().getCenter()), f);
-        sc = new ScreenConverter(f.getRectangle(), 500, 500);
+        sc = new ScreenConverter(f.getRectangle(), 450, 450);
         
         (uwt = new UpdateWorldTimer(w, 10)).start();
         drawTimer = new Timer(40, this);

@@ -54,9 +54,17 @@ public class Vector2 {
      * @return Получившийся вектор
      */
     public Vector2 normolized() {
-        double len = Math.sqrt(x*x + y*y);
+        double len = length();
         if (len < 1e-12) /*Да, здесь не по модулю, т.к. корень не будет отрицательным.*/
             return new Vector2(0, 0);
         return new Vector2(x / len, y / len);
+    }
+    
+    /**
+     * Метод возвращает модуль вектора
+     * @return Вычесленное значение
+     */
+    public double length() {
+        return Math.sqrt(x*x + y*y);
     }
 }

@@ -22,6 +22,7 @@ public class World {
     public World(Puck p, Field f) {
         this.p = p;
         this.f = f;
+        p.setVelocity(new Vector2(2, 1));
     }
     
     /**
@@ -29,7 +30,35 @@ public class World {
      * @param dt Промежуток времени, за который требуется обновить мир.
      */
     public void update(double dt) {
+        Vector2 np = p.getPosition()
+                .add(p.getVelocity().mul(dt))
+                .add(p.getAcceleration().mul(dt*dt*0.5));
+        Vector2 nv = p.getVelocity()
+                .add(p.getAcceleration().mul(dt));
         
+        double vx = nv.getX(), vy = nv.getY();
+        boolean reset = false;
+        if (np.getX() - p.getR() < f.getRectangle().getLeft() || np.getX() + p.getR() > f.getRectangle().getRight()) {
+            vx = -vx;
+            reset = true;
+        }
+        if (np.getY() - p.getR() < f.getRectangle().getBottom() || np.getY() + p.getR() > f.getRectangle().getTop()) {
+            vy = -vy;
+            reset = true;
+        }
+        nv = new Vector2(vx, vy);
+        if (nv.length() < 1e-10)
+            nv = new Vector2(0, 0);
+        if (reset)
+            np = p.getPosition();
+        
+        Vector2 Fvn = new Vector2(0, 0);
+        Vector2 Ftr = p.getVelocity().normolized().mul(-f.getMu()*p.getM()*f.getG());
+        Vector2 F = Ftr.add(Fvn);
+        
+        p.setAcceleration(Ftr.mul(1/p.getM()));
+        p.setVelocity(nv);
+        p.setPosition(np);
     }
     
     /**
@@ -45,11 +74,12 @@ public class World {
         int h = sc.r2sDistanceV(f.getRectangle().getHeight());
         g.setColor(Color.WHITE);
         g.fillRect(tl.getI(), tl.getJ(), w, h);
-        g.setColor(Color.BLACK);
+        g.setColor(Color.RED);
         g.drawRect(tl.getI(), tl.getJ(), w, h);
         ScreenPoint pc = sc.r2s(p.getPosition());
         int rh = sc.r2sDistanceH(p.getR());
         int rv = sc.r2sDistanceV(p.getR());
+        g.setColor(Color.BLACK);
         g.fillOval(pc.getI() - rh, pc.getJ() - rv, rh + rh, rv + rv);
     }
 
