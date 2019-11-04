@@ -82,6 +82,9 @@ public class World {
         int rv = sc.r2sDistanceV(p.getR());
         g.setColor(Color.BLACK);
         g.fillOval(pc.getI() - rh, pc.getJ() - rv, rh + rh, rv + rv);
+        
+        g.drawString(String.format("Mu=%.2f", f.getMu()), 10, 30);
+        g.drawString(String.format("F=%.0f", externalForce.getValue()), 10, 50);
     }
 
     public Field getF() {

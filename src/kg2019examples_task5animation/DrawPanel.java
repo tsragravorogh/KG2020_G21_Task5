@@ -108,7 +108,16 @@ public class DrawPanel extends JPanel implements ActionListener,
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
+        double oldMu = w.getF().getMu();
+        oldMu = Math.round(oldMu*100 + e.getWheelRotation())*0.01;
         
+        if (oldMu < -1)
+            oldMu = -1;
+        else if (oldMu > 1)
+            oldMu = 1;
+        else if (Math.abs(oldMu) < 0.005)
+            oldMu = 0;
+        w.getF().setMu(oldMu);
     }
     
 }
