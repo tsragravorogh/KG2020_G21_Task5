@@ -18,11 +18,12 @@ import kg2019examples_task5animation.utils2d.ScreenPoint;
 public class World {
     private Puck p;
     private Field f;
+    private ForceSource externalForce;
 
     public World(Puck p, Field f) {
         this.p = p;
         this.f = f;
-        p.setVelocity(new Vector2(2, 1));
+        this.externalForce = new ForceSource(f.getRectangle().getCenter());
     }
     
     /**
@@ -52,11 +53,11 @@ public class World {
         if (reset)
             np = p.getPosition();
         
-        Vector2 Fvn = new Vector2(0, 0);
+        Vector2 Fvn = externalForce.getForceAt(np);
         Vector2 Ftr = p.getVelocity().normolized().mul(-f.getMu()*p.getM()*f.getG());
         Vector2 F = Ftr.add(Fvn);
         
-        p.setAcceleration(Ftr.mul(1/p.getM()));
+        p.setAcceleration(F.mul(1/p.getM()));
         p.setVelocity(nv);
         p.setPosition(np);
     }
@@ -99,5 +100,7 @@ public class World {
         this.p = p;
     }
     
-    
+    public ForceSource getExternalForce() {
+        return externalForce;
+    }
 }
