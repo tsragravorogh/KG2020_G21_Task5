@@ -4,6 +4,9 @@
  */
 package kg2019examples_task5animation.math;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * Описывает реальный прямоугольник
@@ -11,6 +14,8 @@ package kg2019examples_task5animation.math;
  */
 public class Rectangle {
     private double left, top, width, height;
+    private Line l, t, r, b;
+    private List<Line> lines;
 
     /**
      * Создаёт новый прямоугольник по двум диагональным точкам
@@ -38,6 +43,25 @@ public class Rectangle {
         this.top = top;
         this.width = width;
         this.height = height;
+        this.lines = createWalls();
+    }
+
+    private ArrayList createWalls() {
+        ArrayList<Line> list = new ArrayList();
+        list.add(this.l = new Line(new Point(left, top), new Point(left, top - height)));
+        list.add(this.t = new Line(new Point(left, top), new Point(left + width, top)));
+        list.add(this.r = new Line(new Point(left + width, top), new Point(left + width, top - height)));
+        list.add(this.b = new Line(new Point(left, top = height), new Point(left + width, top - height)));
+        return list;
+    }
+
+    public boolean isConnectWithWalls(Point point) {
+        for(Line line: lines) {
+            if(line.isConnectWithWalls(point)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public double getBottom() {

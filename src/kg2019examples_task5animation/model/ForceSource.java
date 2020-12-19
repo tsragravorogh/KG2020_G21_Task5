@@ -43,7 +43,7 @@ public class ForceSource {
      */
     public Vector2 getForceAt(Vector2 p) {
         if (Math.abs(value) < 1e-12)
-            return new Vector2(0, 0);
+            return new Vector2(0, -9.8);
         return location.add(p.mul(-1)).normolized().mul(value);
     }
 }

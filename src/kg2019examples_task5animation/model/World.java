@@ -6,17 +6,19 @@ package kg2019examples_task5animation.model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+
 import kg2019examples_task5animation.math.Vector2;
 import kg2019examples_task5animation.utils2d.ScreenConverter;
 import kg2019examples_task5animation.utils2d.ScreenPoint;
 
 /**
- *
  * Класс, описывающий весь мир, в целом.
+ *
  * @author Alexey
  */
 public class World {
     private Puck p;
+    private Ball b;
     private Field f;
     private ForceSource externalForce;
 
@@ -25,18 +27,24 @@ public class World {
         this.f = f;
         this.externalForce = new ForceSource(f.getRectangle().getCenter());
     }
-    
+
+    public World(Ball b, Field f) {
+        this.b = b;
+
+    }
+
     /**
      * Метод обновления состояния мира за указанное время
+     *
      * @param dt Промежуток времени, за который требуется обновить мир.
      */
     public void update(double dt) {
         Vector2 np = p.getPosition()
                 .add(p.getVelocity().mul(dt))
-                .add(p.getAcceleration().mul(dt*dt*0.5));
+                .add(p.getAcceleration().mul(dt * dt * 0.5));
         Vector2 nv = p.getVelocity()
                 .add(p.getAcceleration().mul(dt));
-        
+
         double vx = nv.getX(), vy = nv.getY();
         boolean reset = false;
         if (np.getX() - p.getR() < f.getRectangle().getLeft() || np.getX() + p.getR() > f.getRectangle().getRight()) {
@@ -52,21 +60,22 @@ public class World {
             nv = new Vector2(0, 0);
         if (reset)
             np = p.getPosition();
-        
+
         Vector2 Fvn = externalForce.getForceAt(np);
-        Vector2 Ftr = p.getVelocity().normolized().mul(-f.getMu()*p.getM()*f.getG());
+        Vector2 Ftr = p.getVelocity().normolized().mul(-f.getMu() * p.getM() * f.getG());
         Vector2 F = Ftr.add(Fvn);
-        
-        p.setAcceleration(F.mul(1/p.getM()));
+
+        p.setAcceleration(F.mul(1 / p.getM()));
         p.setVelocity(nv);
         p.setPosition(np);
     }
-    
+
     /**
      * Метод рисует ткущее состояние мира.
      * На самом деле всю логику рисования стоит вынести из этого класса
      * куда-нибудь в WroldDrawer, унаследованный от IDrawer
-     * @param g Графикс, на котором надо нарисовать текущее состояние.
+     *
+     * @param g  Графикс, на котором надо нарисовать текущее состояние.
      * @param sc Актуальный конвертер координат.
      */
     public void draw(Graphics2D g, ScreenConverter sc) {
@@ -77,12 +86,13 @@ public class World {
         g.fillRect(tl.getI(), tl.getJ(), w, h);
         g.setColor(Color.RED);
         g.drawRect(tl.getI(), tl.getJ(), w, h);
+
         ScreenPoint pc = sc.r2s(p.getPosition());
         int rh = sc.r2sDistanceH(p.getR());
         int rv = sc.r2sDistanceV(p.getR());
         g.setColor(Color.BLACK);
         g.fillOval(pc.getI() - rh, pc.getJ() - rv, rh + rh, rv + rv);
-        
+
         g.drawString(String.format("Mu=%.2f", f.getMu()), 10, 30);
         g.drawString(String.format("F=%.0f", externalForce.getValue()), 10, 50);
     }
@@ -102,7 +112,7 @@ public class World {
     public void setP(Puck p) {
         this.p = p;
     }
-    
+
     public ForceSource getExternalForce() {
         return externalForce;
     }
