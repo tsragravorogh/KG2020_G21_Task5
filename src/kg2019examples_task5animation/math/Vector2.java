@@ -29,7 +29,15 @@ public class Vector2 {
     public double getY() {
         return y;
     }
-    
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
     /**
      * Вычисляет новый вектор, который является результатом сложения двух векторов
      * @param other другой вектор, с которым складывается текущий

@@ -20,7 +20,7 @@ public class UpdateWorldTimer extends AbstractWorldTimer {
     @Override
     void worldAction(World w) {
         long time = System.currentTimeMillis();
-        actualWorld.update((time - last) * 0.001);
+        actualWorld.updateNew((time - last) * 0.001);
         last = time;
     }
 

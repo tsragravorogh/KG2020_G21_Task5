@@ -14,12 +14,13 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+
 import kg2019examples_task5animation.timers.AbstractWorldTimer;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import kg2019examples_task5animation.math.Rectangle;
 import kg2019examples_task5animation.model.Field;
-import kg2019examples_task5animation.model.Puck;
+import kg2019examples_task5animation.model.Ball;
 import kg2019examples_task5animation.model.World;
 import kg2019examples_task5animation.timers.UpdateWorldTimer;
 import kg2019examples_task5animation.utils2d.ScreenConverter;
@@ -41,7 +42,8 @@ public class DrawPanel extends JPanel implements ActionListener,
         Field f = new Field(
                 new Rectangle(0, 10, 10, 10),
             0.1, 9.8);
-        w = new World(new Puck(1, 0.3, f.getRectangle().getCenter()), f);
+        w = new World(new Ball(1, 0.6, 10000, f.getRectangle().getCenter()), f);
+//        w = new World(new Ball(1, 0.3, f.getRectangle().getCenter()), f);
         sc = new ScreenConverter(f.getRectangle(), 450, 450);
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
