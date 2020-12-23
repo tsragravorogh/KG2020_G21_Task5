@@ -99,7 +99,6 @@ public class World {
                     b.setYr(b.getYr() + d);
                 } else b.setTypeOfMove(Ball.TypeOfMove.decompression);
             }
-            System.out.println(b.getPosition().getX() + " " + b.getPosition().getY());
         } else if (b.getTypeOfMove() == Ball.TypeOfMove.decompression) {
             double d;
             Vector2 newP;
