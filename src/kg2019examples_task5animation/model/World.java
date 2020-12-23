@@ -63,6 +63,7 @@ public class World {
                     //System.out.println(dCompr);
                 }
             }
+            System.out.println("/// летит");
             Vector2 Fvn = externalForce.getForceAt(np);
             Vector2 Ftr = b.getVelocity().normolized().mul(-f.getMu() * b.getM() * f.getG());
             Vector2 F = Ftr.add(Fvn);
@@ -82,6 +83,7 @@ public class World {
                     } else {
                         newP = new Vector2(b.getPosition().getX(), b.getPosition().getY() - d);
                     }
+                    System.out.println("/// сжимается 1");
                     b.setPosition(newP);
                     b.setXr(b.getXr() + d);
                     b.setYr(b.getYr() - d);
@@ -94,6 +96,7 @@ public class World {
                     } else {
                         newP = new Vector2(b.getPosition().getX() + d, b.getPosition().getY());
                     }
+                    System.out.println("/// сжимается 2");
                     b.setPosition(newP);
                     b.setXr(b.getXr() - d);
                     b.setYr(b.getYr() + d);
@@ -105,15 +108,18 @@ public class World {
             if (b.getWall() == Walls.UP || b.getWall() == Walls.DOWN) {
                 if (b.getYr() < b.getNormalRadius()) {
                     d = dt * Math.abs(b.getVelocity().getY() / Math.PI);
-                    System.out.println(d);
+                    //System.out.println(d);
                     if (b.getWall() == Walls.UP) {
                         newP = new Vector2(b.getPosition().getX(), b.getPosition().getY() - d);
                     } else {
                         newP = new Vector2(b.getPosition().getX(), b.getPosition().getY() + d);
                     }
+                    System.out.println("/// разсжимается 1");
                     b.setPosition(newP);
-                    b.setXr(b.getXr() - d);
-                    b.setYr(b.getYr() + d);
+                    b.setXr(b.getNormalRadius());
+                    b.setYr(b.getNormalRadius());
+//                    b.setXr(b.getXr() - d); //-d
+//                    b.setYr(b.getYr() + d);
                 } else b.setTypeOfMove(Ball.TypeOfMove.movement);
             } else {
                 d = dt * Math.abs(b.getVelocity().getX() / Math.PI);
@@ -123,6 +129,7 @@ public class World {
                     } else {
                         newP = new Vector2(b.getPosition().getX() - d, b.getPosition().getY());
                     }
+                    System.out.println("/// разсжимается 2");
                     b.setPosition(newP);
                     b.setXr(b.getXr() + d);
                     b.setYr(b.getYr() - d);
